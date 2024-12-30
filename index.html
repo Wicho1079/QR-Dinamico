@@ -18,7 +18,7 @@
     document.getElementById('qr-form').addEventListener('submit', function(event) {
       event.preventDefault();
       const id = document.getElementById('id').value;
-      fetch(`https://script.google.com/macros/s/AKfycbwaNA4Gl-xGUsVDB3LSMAYWqsFlm1aVGUm41a1K-dz0D34uofQofCA5BImDi0oN2KL3/exec${id}`)
+      fetch(`https://script.google.com/macros/s/AKfycbxbXf0-21K_ANsTrW8kb7W15oY_NMmn8NbOJf3jDPtH2gq-3JkIkup0Bzfk-D5IKsl8/exec${id}`)
         .then(response => response.text())
         .then(data => {
           document.getElementById('qr-result').innerHTML = `<a href="${data}" target="_blank">${data}</a>`;
