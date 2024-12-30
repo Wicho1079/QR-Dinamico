@@ -1,30 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QR System</title>
-</head>
-<body>
-  <h1>Sistema de Códigos QR</h1>
-  <form id="qr-form">
-    <label for="id">ID:</label>
-    <input type="text" id="id" name="id" required>
-    <button type="submit">Generar</button>
-  </form>
-  <div id="qr-result"></div>
+<html>
+  <head>
+    <title>Generar Código QR</title>
+  </head>
+  <body>
+    <button id="generarQR">Generar QR</button>
+    <div id="qrContainer"></div>
 
-  <script>
-    document.getElementById('qr-form').addEventListener('submit', function(event) {
-      event.preventDefault();
-      const id = document.getElementById('id').value;
-      fetch(`https://script.google.com/macros/s/AKfycbxbXf0-21K_ANsTrW8kb7W15oY_NMmn8NbOJf3jDPtH2gq-3JkIkup0Bzfk-D5IKsl8/exec${id}`)
-        .then(response => response.text())
-        .then(data => {
-          document.getElementById('qr-result').innerHTML = `<a href="${data}" target="_blank">${data}</a>`;
-        })
-        .catch(error => console.error('Error:', error));
-    });
-  </script>
-</body>
+    <script>
+      document.getElementById("generarQR").onclick = function() {
+        var id = "001";  // Cambia esto con el ID que deseas buscar
+        var url = "https://script.google.com/macros/s/AKfycbxYa63O6gMlEZ5dK4YuM_Mg7o7g2Zvf-MjxL4-ilFcUhTJzzqLz6LI4TycAiu_RF8w/exec?id=" + id;
+
+        fetch(url)
+          .then(response => response.text())
+          .then(data => {
+            document.getElementById("qrContainer").innerHTML = "URL: " + data;
+          })
+          .catch(error => {
+            console.error('Error al obtener la URL:', error);
+          });
+      }
+    </script>
+  </body>
 </html>
