@@ -1,76 +1,30 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <title></title>
-  <style>
-      body {
-        background-color: lightblue;
-        text-align: center;
-      }
-      
-      .lds-ring {
-  display: inline-block;
-  position: relative;
-  width: 80px;
-  height: 80px;
-}
-.lds-ring div {
-  box-sizing: border-box;
-  display: block;
-  position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid #fff;
-  border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
-}
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
-}
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
-}
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
-}
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
-  </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QR System</title>
 </head>
 <body>
-  <script>
-    const AS_URL_BASE = "https://script.google.com/macros/s/AKfycbzTJEwABM5NpPHubqK7GHhHdFI7FP2r5ym6GWNjrPlNidY6jHgNPONpTrDUOT0L2Ejl/exec";
-    
-    var url = document.location.href;
-    var k = url.substr(url.lastIndexOf("k=")+2);
-    
-    if(k){
-      fetch(AS_URL_BASE+'?k='+k)
-      .then(r => r.text())
-      .then((r) => {
-        console.log(r);
-        //document.write(r);
-        if(r){
-          document.location.replace(r);
-        }
-      })
-      .catch(err => console.log(err))
-    }
+  <h1>Sistema de Códigos QR</h1>
+  <form id="qr-form">
+    <label for="id">ID:</label>
+    <input type="text" id="id" name="id" required>
+    <button type="submit">Generar</button>
+  </form>
+  <div id="qr-result"></div>
 
+  <script>
+    document.getElementById('qr-form').addEventListener('submit', function(event) {
+      event.preventDefault();
+      const id = document.getElementById('id').value;
+      fetch(`https://script.google.com/macros/s/AKfycbx8n8_uIlL1Hu8HVpTpVahIuZJYrogVhaohkCdTHk5oKkFHPBgkve3X92vlMd4IE7cp/exec${id}`)
+        .then(response => response.text())
+        .then(data => {
+          document.getElementById('qr-result').innerHTML = `<a href="${data}" target="_blank">${data}</a>`;
+        })
+        .catch(error => console.error('Error:', error));
+    });
   </script>
-  
-  <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
-  
-  
 </body>
 </html>
